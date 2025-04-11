@@ -13,8 +13,8 @@ const {
   require('dotenv').config();
   
   // Hardcoded Render API details (needed even if backend is offline)
-  const RENDER_API_KEY = 'your_render_api_key_here';
-  const RENDER_SERVICE_ID = 'your_render_service_id_here';
+  const RENDER_API_KEY = 'rnd_XW4Kptgx5gvxvBcEzpEF0gegyQZh';
+  const RENDER_SERVICE_ID = 'srv-cvs9bimr433s73c1edeg';
   
   module.exports = async (interaction) => {
     // Handle transaction dropdown
