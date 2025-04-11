@@ -104,7 +104,7 @@ client.once('ready', async () => {
       const notificationChannel = await client.channels.fetch(notificationChannelId);
       if (notificationChannel) {
         const notifyEmbed = new EmbedBuilder()
-          .setColor('Green')
+          .setColor('Red')
           .setTitle('🔔 Panakkaran Bot is Now Online!')
           .setDescription('The bot has successfully started and is running smoothly.')
           .setFooter({ text: 'Powered by Muhammed Razi™' })

@@ -5,6 +5,7 @@ const {
     ActionRowBuilder,
     EmbedBuilder,
     StringSelectMenuBuilder,
+    InteractionResponseFlags,
   } = require('discord.js');
   
   const { createTransactionDropdown } = require('../services/transactionService');
@@ -39,7 +40,7 @@ const {
       } else {
         await interaction.reply({
           content: '🚧 This option is not available yet.',
-          ephemeral: true,
+          flags: 64, // ephemeral
         });
       }
   
@@ -79,7 +80,7 @@ const {
             { name: 'Amount', value: `₹${amount}`, inline: true },
             { name: 'Available Balance', value: `₹${balance}`, inline: true }
           )
-          .setColor(type === 'expense' ? 0xE74C3C : 0x2ECC71)
+          .setColor(type === 'expense' ? 0xe74c3c : 0x2ecc71)
           .setTimestamp()
           .setFooter({ text: 'Powered by Muhammed Razi™' });
   
@@ -89,10 +90,11 @@ const {
         if (mainChannel) await mainChannel.send({ embeds: [embed] });
         if (transactionChannel) await transactionChannel.send({ embeds: [embed] });
   
-        await interaction.deferUpdate();
+        await interaction.deferUpdate(); // acknowledges the modal submit
       } catch (err) {
         console.error('Modal Submission Error:', err);
       }
+      return;
     }
   
     // Handle channel manager dropdown
@@ -101,14 +103,14 @@ const {
       const targetChannel = await interaction.client.channels.fetch(selectedChannelId);
   
       if (!targetChannel || targetChannel.type !== 0) {
-        await interaction.reply({ content: '⚠️ Invalid channel selected.', ephemeral: true });
+        await interaction.reply({
+          content: '⚠️ Invalid channel selected.',
+          flags: 64,
+        });
         return;
       }
   
-      await interaction.reply({
-        content: `🧹 Are you sure you want to **delete all messages** in <#${selectedChannelId}>?\nClearing in 3 seconds...`,
-        ephemeral: true,
-      });
+      await interaction.deferReply({ flags: 64 }); // reply only once
   
       setTimeout(async () => {
         try {
@@ -124,15 +126,13 @@ const {
             }
           } while (messages.size >= 2);
   
-          await interaction.followUp({
+          await interaction.editReply({
             content: `✅ Cleared **${deleted}** messages in <#${selectedChannelId}>`,
-            ephemeral: true,
           });
         } catch (err) {
           console.error('Delete Error:', err);
-          await interaction.followUp({
+          await interaction.editReply({
             content: '❌ Failed to delete messages. Make sure I have `MANAGE_MESSAGES` permission.',
-            ephemeral: true,
           });
         }
       }, 3000);

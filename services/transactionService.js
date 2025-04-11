@@ -2,7 +2,7 @@ const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require('dis
 
 function createTransactionDropdown() {
   const embed = new EmbedBuilder()
-    .setImage('https://i.postimg.cc/T1PmqhF6/a-PPLICATION.png')
+    .setImage('https://i.postimg.cc/HLS2Rtk7/panakkaran-report-banner.jpg')
     .setColor('Red');
 
   const row = new ActionRowBuilder().addComponents(

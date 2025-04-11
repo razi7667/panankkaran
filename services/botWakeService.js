@@ -9,7 +9,7 @@ const {
     const embed = new EmbedBuilder()
       .setAuthor({
         name: 'Panakkaran Bot Status',
-        iconURL: 'https://i.postimg.cc/T1PmqhF6/a-PPLICATION.png',
+        iconURL: 'https://i.postimg.cc/WzPRxSh7/panakkaran-logo.png',
       })
       .setColor('Red')
       .addFields({

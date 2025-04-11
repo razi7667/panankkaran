@@ -23,7 +23,7 @@ const {
         {
           label: 'Expense Channel',
           value: process.env.CHANNEL_EXPENSE,
-          emoji: '💬',
+          emoji: '🧾',
           description: 'Delete all messages in the Expense channel',
         },
         {
@@ -43,6 +43,12 @@ const {
           value: process.env.CHANNEL_NOTIFICATION,
           emoji: '🔔',
           description: 'Delete all messages in the Notification channel',
+        },
+        {
+            label: 'Message Manager Channel',
+            value: process.env.CHANNEL_MANAGER,
+            emoji: '📩',
+            description: 'Delete all messages in the Message channel',
         },
       ]);
   
