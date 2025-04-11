@@ -21,6 +21,8 @@ const {
       .setFooter({ text: 'Powered by Muhammed Razi™' })
       .setTimestamp();
   
+    // 🔒 Hidden: Wake Button Setup
+    /*
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setCustomId('wake_up_bot')
@@ -28,18 +30,26 @@ const {
         .setStyle(isOnline ? ButtonStyle.Success : ButtonStyle.Primary)
         .setDisabled(isOnline)
     );
+    */
   
-    return { embed, row };
+    // Return only the embed for now
+    return { embed /*, row */ };
   }
   
   async function sendStatusEmbed(channel, isOnline) {
-    const { embed, row } = getStatusEmbedRow(isOnline);
-    return await channel.send({ embeds: [embed], components: [row] });
+    const { embed /*, row */ } = getStatusEmbedRow(isOnline);
+    return await channel.send({
+      embeds: [embed],
+      // components: [row], // 🔒 Hidden: Button Holder
+    });
   }
   
   async function editStatusEmbed(message, isOnline) {
-    const { embed, row } = getStatusEmbedRow(isOnline);
-    return await message.edit({ embeds: [embed], components: [row] });
+    const { embed /*, row */ } = getStatusEmbedRow(isOnline);
+    return await message.edit({
+      embeds: [embed],
+      // components: [row], // 🔒 Hidden: Button Holder
+    });
   }
   
   module.exports = {

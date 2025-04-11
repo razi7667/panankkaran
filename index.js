@@ -71,7 +71,7 @@ async function updateStatusMessage(channel, isOnline) {
 }
 
 client.once('ready', async () => {
-  console.log(`${client.user.tag} is online ✅`);
+  console.log(`✅ ${client.user.tag} is online`);
 
   try {
     // Start Channel for Bot Status
