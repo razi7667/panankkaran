@@ -11,7 +11,7 @@ const {
         name: 'Panakkaran Bot Status',
         iconURL: 'https://i.postimg.cc/T1PmqhF6/a-PPLICATION.png',
       })
-      .setColor(isOnline ? 'Green' : 'Red')
+      .setColor('Red')
       .addFields({
         name: '• Status',
         value: isOnline
@@ -23,16 +23,10 @@ const {
   
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
-        .setCustomId('wake_bot')
-        .setLabel('🔄 Wake')
-        .setStyle(ButtonStyle.Success)
-        .setDisabled(isOnline),
-  
-      new ButtonBuilder()
-        .setCustomId('sleep_bot')
-        .setLabel('😴 Sleep')
-        .setStyle(ButtonStyle.Danger)
-        .setDisabled(!isOnline)
+        .setCustomId('wake_up_bot')
+        .setLabel(isOnline ? '✅ Already Awake' : '🔄 Wake Bot')
+        .setStyle(isOnline ? ButtonStyle.Success : ButtonStyle.Primary)
+        .setDisabled(isOnline)
     );
   
     return { embed, row };
