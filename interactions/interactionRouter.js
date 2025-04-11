@@ -4,10 +4,11 @@ const {
     TextInputStyle,
     ActionRowBuilder,
     EmbedBuilder,
-    StringSelectMenuBuilder,
   } = require('discord.js');
   
   const { createTransactionDropdown } = require('../services/transactionService');
+  const { editStatusEmbed } = require('../services/botWakeService');
+  const fetch = require('node-fetch');
   
   module.exports = async (interaction) => {
     // Handle transaction dropdown
@@ -51,7 +52,6 @@ const {
           console.error('Dropdown Reset Error:', err);
         }
       }, 1000);
-  
       return;
     }
   
@@ -79,7 +79,7 @@ const {
             { name: 'Amount', value: `₹${amount}`, inline: true },
             { name: 'Available Balance', value: `₹${balance}`, inline: true }
           )
-          .setColor(type === 'expense' ? 0xE74C3C : 0x2ECC71)
+          .setColor(type === 'expense' ? 0xe74c3c : 0x2ecc71)
           .setTimestamp()
           .setFooter({ text: 'Powered by Muhammed Razi™' });
   
@@ -93,6 +93,7 @@ const {
       } catch (err) {
         console.error('Modal Submission Error:', err);
       }
+      return;
     }
   
     // Handle channel manager dropdown
@@ -136,6 +137,36 @@ const {
           });
         }
       }, 3000);
+      return;
+    }
+  
+    // ✅ Handle wake-up bot button
+    if (interaction.isButton() && interaction.customId === 'wake_up_bot') {
+      await interaction.deferReply({ ephemeral: true });
+  
+      try {
+        const res = await fetch(process.env.WAKEUP_PING_URL); // Set this in .env
+        const isOnline = res.ok;
+  
+        if (isOnline) {
+          await interaction.editReply('✅ Bot is now awake!');
+  
+          // Edit original message's embed
+          await editStatusEmbed(interaction.message, true);
+  
+          // Optional: Send notification
+          const notifyChannel = await interaction.client.channels.fetch(process.env.CHANNEL_NOTIFICATION);
+          if (notifyChannel) {
+            await notifyChannel.send('✅ Bot successfully woken up!');
+          }
+        } else {
+          throw new Error('Ping failed');
+        }
+      } catch (err) {
+        console.error('Wake-up Error:', err);
+        await interaction.editReply('❌ Failed to wake up bot.');
+      }
+      return;
     }
   };
   
